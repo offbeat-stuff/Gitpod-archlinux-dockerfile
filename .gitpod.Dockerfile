@@ -5,10 +5,7 @@ RUN pacman -Syu --noconfirm --needed \
     git-lfs \
     docker \
     sudo \
-    base-devel \
-    fish \
-    neovim \
-    wget unzip nodejs
+    base-devel
 
 #### Taken From gitpod/workspace-base with slight modifications
 ### Gitpod user ###
@@ -28,6 +25,7 @@ USER root
 # configure git-lfs
 RUN git lfs install --system
 ####
+RUN pacman -Sy --noconfirm fish neovim wget unzip nodejs
 
 USER gitpod
 WORKDIR /tmp
