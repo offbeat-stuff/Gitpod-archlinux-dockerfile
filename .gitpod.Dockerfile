@@ -25,7 +25,8 @@ USER root
 # configure git-lfs
 RUN git lfs install --system
 ####
-RUN pacman -Sy --noconfirm fish neovim wget unzip nodejs
+RUN pacman -Sy --noconfirm fish \
+    neovim wget unzip nodejs zip
 
 USER gitpod
 WORKDIR /tmp
