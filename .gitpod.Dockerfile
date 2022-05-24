@@ -5,7 +5,12 @@ RUN pacman -Syu --noconfirm --needed \
     git-lfs \
     docker \
     sudo \
-    base-devel
+    base-devel \
+    fish \
+    neovim \
+    zip \
+    unzip \
+    wget
 
 #### Taken From gitpod/workspace-base with slight modifications
 ### Gitpod user ###
@@ -24,12 +29,6 @@ RUN (echo; echo "for i in \$(ls \$HOME/.bashrc.d/*); do source \$i; done"; echo)
 USER root
 # configure git-lfs
 RUN git lfs install --system
-####
-RUN pacman -Sy --noconfirm fish \
-    neovim \
-    wget \
-    unzip \
-    zip
 
 USER gitpod
 WORKDIR /tmp
