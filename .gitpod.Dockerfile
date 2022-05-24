@@ -7,10 +7,7 @@ RUN pacman -Syu --noconfirm --needed \
     sudo \
     base-devel \
     fish \
-    neovim \
-    zip \
-    unzip \
-    wget
+    neovim
 
 #### Taken From gitpod/workspace-base with slight modifications
 ### Gitpod user ###
@@ -32,7 +29,7 @@ RUN git lfs install --system
 
 USER gitpod
 WORKDIR /tmp
-RUN bash -c "git clone https://github.com/offbeat-stuff/gitpod-dotfiles ~/dotfiles && cd ~/dotfiles && chmod +x ./*.{fish,sh} && ./install.sh"
+RUN bash -c "git clone https://github.com/offbeat-stuff/gitpod-dotfiles dotfiles && cd dotfiles && chmod +x ./*.{fish,sh} && ./install.sh"
 
 WORKDIR /workspace
 CMD ["bash"]
