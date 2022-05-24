@@ -5,7 +5,9 @@ RUN pacman -Syu --noconfirm --needed \
     git-lfs \
     docker \
     sudo \
-    base-devel
+    base-devel \
+    fish \
+    neovim
 
 #### Taken From gitpod/workspace-base with slight modifications
 ### Gitpod user ###
@@ -17,19 +19,18 @@ WORKDIR $HOME
 
 ### Gitpod user (2) ###
 USER gitpod
-# use sudo so that user does not get sudo usage info on (the first) login
-RUN sudo echo "Running 'sudo' for Gitpod: success"
+
 RUN mkdir /home/gitpod/.bashrc.d
 RUN (echo; echo "for i in \$(ls \$HOME/.bashrc.d/*); do source \$i; done"; echo) >> /home/gitpod/.bashrc
 
+USER root
 # configure git-lfs
-RUN sudo git lfs install --system
+RUN git lfs install --system
 ####
 
-# add yay for aur
-RUN sudo su gitpod -c cd /tmp && \
-    git clone https://aur.archlinux.org/yay-bin && \
-    cd yay-bin && \
-    makepkg -si --noconfirm
-RUN sudo su gitpod -c "yay -Syu --noconfirm neofetch"
-RUN sudo su gitpod -c "git clone https://github.com/offbeat-stuff/gitpod-dotfiles ~/dotfiles && cd ~/dotfiles && chmod +x ./install.{fish,sh} && ./install.sh"
+USER gitpod
+WORKDIR /tmp
+RUN bash -c "git clone https://github.com/offbeat-stuff/gitpod-dotfiles ~/dotfiles && cd ~/dotfiles && chmod +x ./install.{fish,sh} && ./install.sh"
+
+WORKDIR /workspace
+CMD ["bash"]
