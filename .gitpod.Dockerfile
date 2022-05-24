@@ -7,7 +7,10 @@ RUN pacman -Syu --noconfirm --needed \
     sudo \
     base-devel \
     fish \
-    neovim
+    neovim \
+    zip \
+    unzip \
+    wget
 
 #### Taken From gitpod/workspace-base with slight modifications
 ### Gitpod user ###
