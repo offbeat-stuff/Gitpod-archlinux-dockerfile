@@ -29,7 +29,7 @@ RUN pacman -Sy --noconfirm fish neovim wget unzip nodejs
 
 USER gitpod
 WORKDIR /tmp
-RUN bash -c "git clone https://github.com/offbeat-stuff/gitpod-dotfiles ~/dotfiles && cd ~/dotfiles && chmod +x ./install.{fish,sh} && ./install.sh"
+RUN bash -c "git clone https://github.com/offbeat-stuff/gitpod-dotfiles ~/dotfiles && cd ~/dotfiles && ./install.sh"
 
 WORKDIR /workspace
 CMD ["bash"]
