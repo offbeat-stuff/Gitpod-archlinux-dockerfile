@@ -7,7 +7,8 @@ RUN pacman -Syu --noconfirm --needed \
     sudo \
     base-devel \
     fish \
-    neovim
+    neovim \
+    wget unzip nodejs
 
 #### Taken From gitpod/workspace-base with slight modifications
 ### Gitpod user ###
