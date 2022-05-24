@@ -31,8 +31,5 @@ USER root
 RUN git lfs install --system
 
 USER gitpod
-WORKDIR /tmp
-RUN bash -c "git clone https://github.com/offbeat-stuff/gitpod-dotfiles dotfiles && cd dotfiles && chmod +x ./*.{fish,sh} && ./install.sh"
-
 WORKDIR /workspace
 CMD ["bash"]
