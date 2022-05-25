@@ -10,7 +10,7 @@ RUN pacman -Syu --noconfirm --needed \
     neovim \
     zip \
     unzip \
-    wget
+    wget nodejs npm
 
 #### Taken From gitpod/workspace-base with slight modifications
 ### Gitpod user ###
@@ -22,13 +22,18 @@ WORKDIR $HOME
 
 ### Gitpod user (2) ###
 USER gitpod
-
+# use sudo so that user does not get sudo usage info on (the first) login
+RUN sudo echo "Running 'sudo' for Gitpod: success"
 RUN mkdir /home/gitpod/.bashrc.d
 RUN (echo; echo "for i in \$(ls \$HOME/.bashrc.d/*); do source \$i; done"; echo) >> /home/gitpod/.bashrc
 
-USER root
-# configure git-lfs
-RUN git lfs install --system
+RUN sudo git lfs install --system
+# add aur
+RUN sudo su gitpod -c cd /tmp && \
+    git clone https://aur.archlinux.org/yay-bin && \
+    cd yay-bin && \
+    makepkg -si --noconfirm
+
 
 USER gitpod
 WORKDIR /workspace
