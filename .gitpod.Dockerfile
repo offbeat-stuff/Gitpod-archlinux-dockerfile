@@ -1,6 +1,6 @@
 FROM archlinux
 
-RUN pacman -Syu --noconfirm --needed \
+RUN pacman -Syu --noprogressbar --noconfirm --needed \
     git \
     git-lfs \
     docker \
@@ -10,12 +10,14 @@ RUN pacman -Syu --noconfirm --needed \
     neovim \
     zip \
     unzip \
-    wget nodejs npm
+    wget nodejs npm vim
 
 #### Taken From gitpod/workspace-base with slight modifications
 ### Gitpod user ###
-RUN useradd -l -u 33333 -G wheel -md /home/gitpod -s /bin/bash -p gitpod gitpod
-RUN sed -i.bkp -e 's/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers 
+RUN useradd -l -u 33333 -G wheel -md /home/gitpod -s /bin/bash -p gitpod gitpod \
+    && echo '%wheel   ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/no_password_sudo \
+    # To emulate the workspace-session behavior within dazzle build env
+    && mkdir /workspace && chown -hR gitpod:gitpod /workspace
 
 ENV HOME=/home/gitpod
 WORKDIR $HOME
@@ -34,6 +36,8 @@ RUN sudo su gitpod -c cd /tmp && \
     cd yay-bin && \
     makepkg -si --noconfirm
 
+WORKDIR /tmp
+RUN bash -c "git clone https://github.com/offbeat-stuff/gitpod-dotfiles dotfiles && cd dotfiles && ./install.sh"
 
 USER gitpod
 WORKDIR /workspace
