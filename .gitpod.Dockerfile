@@ -32,4 +32,3 @@ RUN git lfs install --system
 
 USER gitpod
 WORKDIR /workspace
-CMD ["bash"]
