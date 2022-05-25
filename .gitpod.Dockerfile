@@ -36,6 +36,10 @@ RUN sudo su gitpod -c cd /tmp && \
     cd yay-bin && \
     makepkg -si --noconfirm
 
+#install zulu first so gradle does not install jdk-18
+RUN yay -Sy --noconfirm --removemake zulu-17-bin
+RUN yay -Sy --noconfirm --removemake metals bloop scala-dotty gradle
+
 WORKDIR /tmp
 RUN bash -c "git clone https://github.com/offbeat-stuff/gitpod-dotfiles dotfiles && cd dotfiles && ./install.sh"
 
